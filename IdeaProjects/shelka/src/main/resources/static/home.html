@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+    <title> Sort Numbers </title>
+</head>
+<body>
+<script type="text/javascript">
+    function sort() {
+    const a = document.getElementById("input").value;
+    //console.log(a)
+  if (!a) {
+    alert ("Input cannot be empty");
+    return;
+  } else {
+    const arr = a.split(",");
+    for (let index = 0; index < arr.length; index++) {
+      if (isNaN(arr[index])) {
+        alert("No alphanumeric input allowed. Please pass valid input.");
+        return;
+      }
+    }
+  }
+  return fetch(`http://localhost:8080/sort?numbers=${a}`)
+    .then(res => {
+        return res.text();
+            })
+            .then(data => {
+            //console.log(data);
+            document.getElementById("input").value = data;
+            })
+    .catch(err =>{
+      console.log(err);
+      alert("Server Down. Unable to complete request at the moment.")
+      }
+    );
+}
+</script>
+<input type="text" id="input"/>
+<button type="button" onclick="sort()">Sort</button>
+</body>
+</html>
